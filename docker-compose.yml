@@ -1,0 +1,108 @@
+version: "2"
+
+services: 
+  teach-system-mysql:
+    image: mysql:5.7.25
+    container_name: teach-system-mysql
+    volumes: 
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/ect/timezone
+      - ./files/mysql/data:/var/lib/mysql
+      - ./files/mysql/my.cnf:/etc/mysql/my.cnf
+    environment: 
+      - MYSQL_ROOT_PASSWORD=$MYSQL_PASS
+    ports: 
+      - 3306:3306
+    networks: 
+      - teachSystem
+  
+  teach-system-redis:
+    image: redis:3.2.10
+    container_name: teach-system-redis
+    networks: 
+      - teachSystem
+    volumes: 
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/ect/timezone
+      - ./files/redis/data:/data
+      - ./files/redis/redis.conf:/etc/redis/redis.conf
+    ports: 
+      - 6379:6379
+    command: redis-server /etc/redis/redis.conf
+
+  teach-system-front:
+    image: nginx
+    container_name: teach-system-front
+    depends_on:
+      - teach-system-backend
+    networks:
+      - teachSystem
+    volumes: 
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/ect/timezone
+      - ./client/dist:/opt/dist
+      - ./files/front/log:/var/log/nginx
+      - ./files/front/nginx.conf:/etc/nginx/nginx.conf
+    ports: 
+      - 8085:8080
+
+  teach-system-backend:
+    image: registry.cn-hangzhou.aliyuncs.com/fleyx/node:v1
+    container_name: teach-system-backend
+    depends_on:
+      - teach-system-mysql
+      - teach-system-redis
+    networks: 
+      - teachSystem
+    environment: 
+      - mysqlHost=teach-system-mysql
+      - redisHost=teach-system-redis
+      - mysqlPassword=$MYSQL_PASS
+      - judgeToken=$JUDGE_TOKEN
+      - judgeUrl=http://judge-server:8080
+      - testSavePath=/opt/tests/test_case
+    volumes: 
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/ect/timezone
+      - ./teachSystem:/opt/workspace
+      - ./JudgeServer/tests/:/opt/tests
+    ports: 
+      - 8089:8088
+    command: "/bin/bash /opt/start.sh"
+
+  # 启动判题核心
+  judge-server:
+    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+    container_name: judge-server
+    read_only: true
+    networks: 
+      - teachSystem
+    cap_drop:
+        - SETPCAP
+        - MKNOD
+        - NET_BIND_SERVICE
+        - SYS_CHROOT
+        - SETFCAP
+        - FSETID
+    tmpfs:
+        - /tmp
+    volumes:
+        - ../JudgeServer/tests/test_case:/test_case:ro
+        - ../JudgeServer/log:/log
+        - ../JudgeServer/run:/judger
+    environment:
+        - BACKEND_URL=http://backend:80/api/judge_server_heartbeat
+        - SERVICE_URL=http://judge-server:12358
+        - TOKEN=$JUDGE_TOKEN
+    ports:
+        - "0.0.0.0:12358:8080"
+
+networks:
+  teachSystem:
+  
+
+
+
+
+
+
