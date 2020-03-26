@@ -3,14 +3,27 @@
     <!-- logo,导航区域 -->
     <div class="left all-item-vcenter">
       <router-link to="/client">
-        <img src="../assets/logo.png" style="width:50px">
+        <img src="../assets/logo.png" style="width:50px" />
       </router-link>
-      <el-menu mode="horizontal" background-color="#f2efe6" @select="handleSelect" ref="topMenu" menu-trigger="hover" :unique-opened="true"  style="border-bottom:0">
+      <el-menu
+        mode="horizontal"
+        background-color="#f2efe6"
+        @select="handleSelect"
+        ref="topMenu"
+        menu-trigger="hover"
+        :unique-opened="true"
+        style="border-bottom:0"
+      >
         <el-submenu index="course" style="margin-right:10px;">
           <template slot="title">
             <span class="course-name">{{courseName}}</span>
           </template>
-          <el-menu-item v-for="item in courseList" :disabled="item.c_id==currentCourseId" :index="item.c_id.toString()" :key="item.c_id">{{item.c_name}}</el-menu-item>
+          <el-menu-item
+            v-for="item in courseList"
+            :disabled="item.c_id==currentCourseId"
+            :index="item.c_id.toString()"
+            :key="item.c_id"
+          >{{item.c_name}}</el-menu-item>
         </el-submenu>
         <el-submenu index="base" v-show="currentCourseId>-1">
           <template slot="title">课程信息</template>
@@ -20,7 +33,6 @@
           <el-menu-item index="teach_plan">教学计划</el-menu-item>
           <el-menu-item index="exam_type">考试方式</el-menu-item>
           <el-menu-item index="reference_book">参考书目</el-menu-item>
-          <el-menu-item index="courseware">课件下载</el-menu-item>
         </el-submenu>
         <el-submenu index="knowledge_point" v-show="currentCourseId>-1">
           <template slot="title">知识点检测</template>
@@ -52,21 +64,25 @@
     </div>
     <!-- 个人信息区域 -->
     <div class="right">
-      <el-dropdown @command="handleCommand" trigger="hover" style="background:#f2efe6" @visible-change="index=>isPersonInfoDropdown = index">
+      <el-dropdown
+        @command="handleCommand"
+        trigger="hover"
+        style="background:#f2efe6"
+        @visible-change="index=>isPersonInfoDropdown = index"
+      >
         <div class="all-item-vcenter pointer">
-          <img class="head-img" :src="userInfo.icon">
+          <img class="head-img" :src="userInfo.icon" />
           <span>
             {{userInfo.u_name}}
-            <i :class="isPersonInfoDropdown?  'el-icon-caret-top':'el-icon-caret-bottom'" style="font-size:16px"></i>
+            <i
+              :class="isPersonInfoDropdown?  'el-icon-caret-top':'el-icon-caret-bottom'"
+              style="font-size:16px"
+            ></i>
           </span>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="info">
-            我的资料
-          </el-dropdown-item>
-          <el-dropdown-item divided command="logout">
-            退出系统
-          </el-dropdown-item>
+          <el-dropdown-item command="info">我的资料</el-dropdown-item>
+          <el-dropdown-item divided command="logout">退出系统</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -87,7 +103,7 @@ export default {
   },
   watch: {
     "$route.path": function(value) {
-      if (value == "/client"||value.startsWith('/client/person')) {
+      if (value == "/client" || value.startsWith("/client/person")) {
         this.currentCourseId = -1;
       } else {
         this.init();
@@ -130,12 +146,12 @@ export default {
       }
     },
     handleCommand(command) {
-      switch(command){
-        case 'logout':
+      switch (command) {
+        case "logout":
           clearClientInfo();
           this.$router.push("/public/client_login");
           break;
-        case 'info':
+        case "info":
           this.$router.push("/client/person/student_info");
           break;
       }
@@ -144,7 +160,7 @@ export default {
       $httpc.get(`/user/${getClientUserInfo().u_id}/course`).then(res => {
         this.courseList = res;
         //传递课程信息到home.vue
-        bus.$emit('courseList',res);
+        bus.$emit("courseList", res);
         this.isCompleted = true;
         this.$nextTick(() => {
           this.init();
@@ -177,7 +193,7 @@ export default {
 
 .left {
   display: flex;
-  margin-left:25px;
+  margin-left: 25px;
 }
 .right {
   display: flex;

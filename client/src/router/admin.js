@@ -12,7 +12,7 @@ import FirstCourse from '@/components/admin/pages/course/base/FirstCourse'
 import ExamType from '@/components/admin/pages/course/base/ExamType'
 import ReferenceBook from '@/components/admin/pages/course/base/ReferenceBook'
 import Section from '@/components/admin/pages/course/base/Section'
-import CoursewareManage from '@/components/admin/pages/course/base/CoursewareManage'
+
 
 import AOverView from '@/components/admin/pages/course/announcement/OverView'
 import AddAnnouncement from '@/components/admin/pages/course/announcement/AddAnnouncement'
@@ -51,172 +51,168 @@ export default {
     }
   },
   children: [{
-      path: "",
-      name: "TotalStatistic",
-      component: TotalStatistic
-    }, {
-      path: 'manage',
-      component: CourseMain,
-      children: [{
-          path: 'course_manage',
-          name: 'CourseManage',
-          component: CourseMange
-        },
-        {
-          path: "user_manage",
-          name: "UserManage",
-          component: UserManage
-        }
-      ]
-    }, {
-      path: "person_space",
-      component: CourseMain,
-      children: [{
-        path: '',
-        name: "PersonInfo",
-        component: PersonInfo
-      }, {
-        path: "safe/:type",
-        name: "PersonSafe",
-        component: PersonSafe
-      }]
-    }, {
-      path: "course/:c_id/base",
-      component: CourseMain,
-      children: [{
-          path: '',
-          name: 'CourseIntro',
-          component: CourseIntro
-        }, {
-          path: 'teacher_intro',
-          name: 'Teacher_intro',
-          component: TeacherIntro
-        },
-        {
-          path: 'first_course',
-          name: 'FirstCourse',
-          component: FirstCourse
-        },
-        {
-          path: 'teach_plan',
-          name: 'TeachPlan',
-          component: TeachPlan
-        },
-        {
-          path: 'exam_type',
-          name: 'ExamType',
-          component: ExamType
-        },
-        {
-          path: 'reference_book',
-          name: 'ReferenceBook',
-          component: ReferenceBook
-        }, {
-          path: 'section',
-          name: 'Section',
-          component: Section
-        }, {
-          path: 'courseware_manage',
-          name: "CoursewareManage",
-          component: CoursewareManage
-        }
-      ]
+    path: "",
+    name: "TotalStatistic",
+    component: TotalStatistic
+  }, {
+    path: 'manage',
+    component: CourseMain,
+    children: [{
+      path: 'course_manage',
+      name: 'CourseManage',
+      component: CourseMange
     },
-    //题库管理
     {
-      path: "course/:c_id/question_bank",
-      component: CourseMain,
-      children: [{
-        path: '',
-        name: "Overwatch",
-        component: QBOverview
-      }, {
-        path: 'question_group_overview',
-        name: "QuestionGroupOverview",
-        component: QuestionGroupOverview
-      }, {
-        path: 'organize_question',
-        name: 'OrganizeQuestion',
-        component: OrganizeQuestion
-      }, {
-        path: 'add/choice_question',
-        name: "AddChoiceQuestion",
-        component: AddChoiceQuestion
-      }, {
-        path: 'add/gap_filling',
-        name: "AddGapFilling",
-        component: AddGapFilling
-      }, {
-        path: 'add/program',
-        name: "AddProgram",
-        component: AddProgram
-      }]
-    },
-    //测试
-    {
-      path: "course/:c_id/test",
-      component: CourseMain,
-      children: [{
-        path: '',
-        name: 'TestOverView',
-        component: TestOverView
-      }, {
-        path: 'add_homework',
-        name: "AddHomework",
-        component: AddHomework
-      }, {
-        path: 'add_exam',
-        name: "AddExam",
-        component: AddExam
-      }]
-    }, {
-      path: "course/:c_id/statistics",
-      component: CourseMain,
-      children: [{
-        path: '',
-        name: 'StudentStatistics',
-        component: StudentStatistics
-      }]
-    }, {
-      path: 'course/:c_id/student',
-      component: CourseMain,
-      children: [{
-        path: '',
-        name: 'OverView',
-        component: OverView,
-      }, {
-        path: 'add_one',
-        name: 'AddSingleStudent',
-        component: AddSingleStudent
-      }, {
-        path: 'add_many',
-        name: 'AddManyStudent',
-        component: AddManyStudent
-      }]
-    },
-    //公告管理
-    {
-      path: 'course/:c_id/announcement',
-      component: CourseMain,
-      children: [{
-        path: '',
-        name: "AnnouncementOverView",
-        component: AOverView
-      }, {
-        path: 'add',
-        name: "AddAnnouncement",
-        component: AddAnnouncement
-      }]
-    },
-    //答疑
-    {
-      path: 'course/:c_id/Q_A',
-      component: CourseMain,
-      children: [{
-        path: '',
-        name: 'CurrentQuestionAnswer',
-        component: CurrentQuestionAnswer
-      }]
+      path: "user_manage",
+      name: "UserManage",
+      component: UserManage
     }
+    ]
+  }, {
+    path: "person_space",
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: "PersonInfo",
+      component: PersonInfo
+    }, {
+      path: "safe/:type",
+      name: "PersonSafe",
+      component: PersonSafe
+    }]
+  }, {
+    path: "course/:c_id/base",
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: 'CourseIntro',
+      component: CourseIntro
+    }, {
+      path: 'teacher_intro',
+      name: 'Teacher_intro',
+      component: TeacherIntro
+    },
+    {
+      path: 'first_course',
+      name: 'FirstCourse',
+      component: FirstCourse
+    },
+    {
+      path: 'teach_plan',
+      name: 'TeachPlan',
+      component: TeachPlan
+    },
+    {
+      path: 'exam_type',
+      name: 'ExamType',
+      component: ExamType
+    },
+    {
+      path: 'reference_book',
+      name: 'ReferenceBook',
+      component: ReferenceBook
+    }, {
+      path: 'section',
+      name: 'Section',
+      component: Section
+    }
+    ]
+  },
+  //题库管理
+  {
+    path: "course/:c_id/question_bank",
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: "Overwatch",
+      component: QBOverview
+    }, {
+      path: 'question_group_overview',
+      name: "QuestionGroupOverview",
+      component: QuestionGroupOverview
+    }, {
+      path: 'organize_question',
+      name: 'OrganizeQuestion',
+      component: OrganizeQuestion
+    }, {
+      path: 'add/choice_question',
+      name: "AddChoiceQuestion",
+      component: AddChoiceQuestion
+    }, {
+      path: 'add/gap_filling',
+      name: "AddGapFilling",
+      component: AddGapFilling
+    }, {
+      path: 'add/program',
+      name: "AddProgram",
+      component: AddProgram
+    }]
+  },
+  //测试
+  {
+    path: "course/:c_id/test",
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: 'TestOverView',
+      component: TestOverView
+    }, {
+      path: 'add_homework',
+      name: "AddHomework",
+      component: AddHomework
+    }, {
+      path: 'add_exam',
+      name: "AddExam",
+      component: AddExam
+    }]
+  }, {
+    path: "course/:c_id/statistics",
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: 'StudentStatistics',
+      component: StudentStatistics
+    }]
+  }, {
+    path: 'course/:c_id/student',
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: 'OverView',
+      component: OverView,
+    }, {
+      path: 'add_one',
+      name: 'AddSingleStudent',
+      component: AddSingleStudent
+    }, {
+      path: 'add_many',
+      name: 'AddManyStudent',
+      component: AddManyStudent
+    }]
+  },
+  //公告管理
+  {
+    path: 'course/:c_id/announcement',
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: "AnnouncementOverView",
+      component: AOverView
+    }, {
+      path: 'add',
+      name: "AddAnnouncement",
+      component: AddAnnouncement
+    }]
+  },
+  //答疑
+  {
+    path: 'course/:c_id/Q_A',
+    component: CourseMain,
+    children: [{
+      path: '',
+      name: 'CurrentQuestionAnswer',
+      component: CurrentQuestionAnswer
+    }]
+  }
   ]
 }
